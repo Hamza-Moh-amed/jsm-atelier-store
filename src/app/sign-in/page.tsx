@@ -1,8 +1,14 @@
 import Link from "next/link";
 import { Suspense } from "react";
 
+import {
+  AccountNavLink,
+  AccountNavLinkFallback,
+} from "@/components/account-nav-link";
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
 import { safeNextPath } from "@/lib/session";
-import SignInForm from "@/components/sign-in-form";
+import { SignInForm } from "@/components/sign-in-form";
 
 export const metadata = {
   title: "Sign in",
@@ -14,7 +20,14 @@ export default async function SignInPage({ searchParams }: PageProps<"/sign-in">
 
   return (
     <>
-    
+      <SiteHeader
+        account={
+          <Suspense fallback={<AccountNavLinkFallback />}>
+            <AccountNavLink />
+          </Suspense>
+        }
+      
+      />
 
       <main className="flex-1">
         <div className="container-prose section stack-lg">
@@ -38,6 +51,7 @@ export default async function SignInPage({ searchParams }: PageProps<"/sign-in">
         </div>
       </main>
 
+      <SiteFooter />
     </>
   );
 }
